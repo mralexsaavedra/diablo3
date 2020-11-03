@@ -1,5 +1,7 @@
 import { createApp } from 'vue'
 
+import BootstrapVue from 'bootstrap-vue'
+
 // Vue Font-Awesome
 import './plugins/fontAwesome'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -13,6 +15,9 @@ import store from './store'
 
 // CSS global
 import './assets/css/main.styl'
+
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 const app = createApp(App)
 
@@ -84,4 +89,4 @@ app.directive('diablo', {
   }
 })
 
-app.use(store).use(router).component('font-awesome-icon', FontAwesomeIcon).mount('#app')
+app.use(store).use(router).use(BootstrapVue).component('font-awesome-icon', FontAwesomeIcon).mount('#app')
