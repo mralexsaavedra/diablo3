@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 
-import BootstrapVue from 'bootstrap-vue'
+// import BootstrapVue from 'bootstrap-vue'
 
 // Vue Font-Awesome
 import './plugins/fontAwesome'
@@ -48,9 +48,6 @@ app.directive('diablo', {
     // Tipografía Diablo
     el.style.fontFamily = 'DiabloHeavy, sans-serif'
 
-    console.log('binding')
-    console.log(binding)
-
     // Argumento (`:`)
     const arg = binding.arg === 'bone' ? 'bone' : 'white'
     // Si el argumento es 'bone'
@@ -89,4 +86,5 @@ app.directive('diablo', {
   }
 })
 
-app.use(store).use(router).use(BootstrapVue).component('font-awesome-icon', FontAwesomeIcon).mount('#app')
+// app.use(store).use(router).use(BootstrapVue).component('font-awesome-icon', FontAwesomeIcon).mount('#app')
+app.use(store).use(router).component('font-awesome-icon', FontAwesomeIcon).mount('#app')

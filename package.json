@@ -1,7 +1,7 @@
 {
   "name": "diablo3",
   "version": "0.1.0",
-  "private": true,
+  "description": "Curso Avanzado de Vue de Platzi",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -9,19 +9,17 @@
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint"
   },
-  "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.32",
-    "@fortawesome/free-brands-svg-icons": "^5.15.1",
-    "@fortawesome/free-solid-svg-icons": "^5.15.1",
-    "@fortawesome/vue-fontawesome": "^3.0.0-2",
-    "axios": "^0.20.0",
-    "bootstrap-vue": "^2.18.1",
-    "core-js": "^3.6.5",
-    "numeral": "^2.0.6",
-    "vue": "^3.0.0",
-    "vue-router": "^4.0.0-0",
-    "vuex": "^4.0.0-0"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mralexsaavedra/diablo3.git"
   },
+  "keywords": [],
+  "author": "Alexander Saavedra",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mralexsaavedra/diablo3/issues"
+  },
+  "homepage": "https://github.com/mralexsaavedra/diablo3#readme",
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-e2e-cypress": "~4.5.0",
@@ -50,6 +48,19 @@
     "typescript": "~3.9.3",
     "vue-cli-plugin-bootstrap-vue": "~0.7.0",
     "vue-jest": "^5.0.0-0"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.32",
+    "@fortawesome/free-brands-svg-icons": "^5.15.1",
+    "@fortawesome/free-solid-svg-icons": "^5.15.1",
+    "@fortawesome/vue-fontawesome": "^3.0.0-2",
+    "axios": "^0.20.0",
+    "bootstrap-vue": "^2.18.1",
+    "core-js": "^3.6.5",
+    "numeral": "^2.0.6",
+    "vue": "^3.0.0",
+    "vue-router": "^4.0.0-0",
+    "vuex": "^4.0.0-0"
   },
   "eslintConfig": {
     "root": true,

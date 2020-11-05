@@ -35,12 +35,12 @@ export default {
     BaseLoading
   },
   setup (props, { root }) {
-    console.log('Hola 🌝')
+    const store = useStore()
 
-    useStore().dispatch('oauth/getToken', null, { root: true })
+    store.dispatch('oauth/getToken', null, { root: true })
 
     const state = reactive({
-      loading: computed(() => useStore().state.loading.value)
+      loading: computed(() => store.state.loading.value)
     })
 
     return {

@@ -45,16 +45,18 @@
 </template>
 
 <script>
-import { computed } from 'vue'
-import { mapState, useStore } from 'vuex'
+import { computed, reactive } from 'vue'
+import { useStore } from 'vuex'
 import setError from '@/mixins/setError'
 
 export default {
   name: 'ErrorView',
   mixins: [setError],
-  setup() {
+  setup () {
+    const store = useStore()
+
     const err = reactive({
-      loading: computed(() => useStore().state.error.value)
+      loading: computed(() => store.state.error.value)
     })
 
     return {

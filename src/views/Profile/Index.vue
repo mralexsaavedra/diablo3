@@ -27,10 +27,13 @@ export default {
   ],
   components: { BaseLoading, MainBlock, ArtisansBlock },
   setup () {
+    const router = useRouter()
+    const route = useRoute()
+
     let isLoading = ref(true)
     const profileData = ref(null)
 
-    const { region, battleTag: account } = useRoute().params
+    const { region, battleTag: account } = route.params
 
     getApiAccount({ region, account })
       .then(({ data }) => {
@@ -40,7 +43,7 @@ export default {
         profileData.value = null
 
         const errObj = {
-          routeParams: useRoute().params,
+          routeParams: route.params,
           message: err.message
         }
 
@@ -51,7 +54,7 @@ export default {
 
         setError.setApiErr(errObj)
 
-        useRouter().push({ name: 'Error' })
+        router.push({ name: 'Error' })
       })
       .finally(() => {
         isLoading = false

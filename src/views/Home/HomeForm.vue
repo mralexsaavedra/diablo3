@@ -55,6 +55,8 @@ import { regions } from '@/utils/regions'
 export default {
   name: 'MainForm',
   setup () {
+    const router = useRouter()
+
     const form = ref({
       battleTag: '',
       region: 'eu'
@@ -65,7 +67,7 @@ export default {
     const onSubmit = () => {
       const { region, battleTag } = form.value
       // TODO
-      useRouter().push({ name: 'Profile', params: { region, battleTag: battleTag.replace('#', '-') } })
+      router.push({ name: 'Profile', params: { region, battleTag: battleTag.replace('#', '-') } })
     }
 
     return { form, regiones, onSubmit }

@@ -2,6 +2,8 @@ import { useStore } from 'vuex'
 import { get } from 'axios'
 import { locales } from '../utils/regions'
 
+const store = useStore()
+
 // https://{region}.api.blizzard.com, where {region} is one of us | eu | kr | tw
 const protocol = 'https://'
 const host = '.api.blizzard.com/'
@@ -19,7 +21,7 @@ function getApiAccount ({ region, account }) {
   const locale = locales[region]
 
   const params = {
-    access_token: useStore().state.oauth.accessToken,
+    access_token: store.state.oauth.accessToken,
     locale
   }
 
@@ -40,7 +42,7 @@ function getApiHero ({ region, account, heroId }) {
   const locale = locales[region]
 
   const params = {
-    access_token: useStore().state.oauth.accessToken,
+    access_token: store.state.oauth.accessToken,
     locale
   }
 
@@ -61,7 +63,7 @@ function getApiDetailedHeroItems ({ region, account, heroId }) {
   const locale = locales[region]
 
   const params = {
-    access_token: useStore().state.oauth.accessToken,
+    access_token: store.state.oauth.accessToken,
     locale
   }
 

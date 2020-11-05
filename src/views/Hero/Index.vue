@@ -44,6 +44,9 @@ export default {
     HeroItems
   },
   setup () {
+    const router = useRouter()
+    const route = useRoute()
+
     let isLoadingHero = ref(false)
     let isLoadingItems = ref(false)
     let hero = ref(null)
@@ -82,7 +85,7 @@ export default {
 
     isLoadingHero = true
     isLoadingItems = true
-    const { region, battleTag: account, heroId } = useRoute().params
+    const { region, battleTag: account, heroId } = route.params
 
     getApiHero({ region, account, heroId })
       .then(({ data }) => {
@@ -91,7 +94,7 @@ export default {
       .catch((err) => {
         hero = null
         const errObj = {
-          routeParams: useRoute().params,
+          routeParams: route.params,
           message: err.message
         }
         if (err.response) {
@@ -99,7 +102,7 @@ export default {
           errObj.status = err.response.status
         }
         setError.setApiErr(errObj)
-        useRouter().push({ name: 'Error' })
+        router.push({ name: 'Error' })
       })
       .finally(() => {
         isLoadingHero = false
