@@ -29,7 +29,7 @@
 <script>
 import { computed } from 'vue'
 
-import heroName from '@/mixins/heroName'
+import useHeroName from '@/composables/useHeroName'
 import { HeroData } from '@/utils/typeValidation'
 
 import SingleStat from './SingleStat'
@@ -37,7 +37,6 @@ import TimePlayed from './TimePlayed'
 
 export default {
   name: 'PlayerStats',
-  mixins: [heroName],
   components: {
     TimePlayed,
     SingleStat
@@ -54,14 +53,17 @@ export default {
         .sort()
         .map(hero => {
           return new HeroData(
-            heroName.classToName(hero),
+            useHeroName().classToName(hero),
             props.stats.timePlayed[hero],
             hero
           )
         })
     })
 
-    return { timePlayed }
+    return {
+      timePlayed,
+      ...useHeroName()
+    }
   }
 }
 </script>

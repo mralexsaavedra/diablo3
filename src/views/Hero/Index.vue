@@ -22,20 +22,18 @@
 
 <script>
 import { ref, computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 
-import setError from '@/mixins/setError'
-import { getApiHero, getApiDetailedHeroItems } from '@/api/search'
 import BaseLoading from '@/components/BaseLoading'
-
 import HeroDetailHeader from './HeroDetailHeader'
 import HeroAttributes from './HeroAttributes/Index'
 import HeroSkills from './HeroSkills/Index'
 import HeroItems from './HeroItems/Index'
 
+import { getApiHero, getApiDetailedHeroItems } from '@/api/search'
+
 export default {
   name: 'HeroView',
-  mixins: [setError],
   components: {
     BaseLoading,
     HeroDetailHeader,
@@ -44,13 +42,12 @@ export default {
     HeroItems
   },
   setup () {
-    const router = useRouter()
     const route = useRoute()
 
-    let isLoadingHero = ref(false)
-    let isLoadingItems = ref(false)
-    let hero = ref(null)
-    let items = ref(null)
+    const isLoadingHero = ref(false)
+    const isLoadingItems = ref(false)
+    const hero = ref(null)
+    const items = ref(null)
 
     const detailHeader = computed(() => {
       const {
@@ -83,42 +80,32 @@ export default {
       return { ...hero.value.stats, classSlug: hero.value.class }
     })
 
-    isLoadingHero = true
-    isLoadingItems = true
-    const { region, battleTag: account, heroId } = route.params
-
-    getApiHero({ region, account, heroId })
-      .then(({ data }) => {
-        hero = data
-      })
-      .catch((err) => {
-        hero = null
-        const errObj = {
-          routeParams: route.params,
-          message: err.message
-        }
-        if (err.response) {
-          errObj.data = err.response.data
-          errObj.status = err.response.status
-        }
-        setError.setApiErr(errObj)
-        router.push({ name: 'Error' })
-      })
-      .finally(() => {
-        isLoadingHero = false
-      })
-
-    getApiDetailedHeroItems({ region, account, heroId })
-      .then(({ data }) => {
-        items = data
-      })
-      .catch((err) => {
-        items = null
-        console.log(err)
-      })
-      .finally(() => {
-        isLoadingItems = false
-      })
+    function fetchHeroData () {
+      const { region, battleTag, heroId } = route.params
+      isLoadingHero.value = true
+      getApiHero({ region, account, heroId })
+        .then(({ data }) => {
+          hero.value = data
+        })
+        .catch()
+        .finally(() => {
+          isLoadingHero.value = false
+        })
+    }
+    function fetchHeroItemsData () {
+      const { region, battleTag: account, heroId } = route.params
+      isLoadingItems.value = true
+      getApiDetailedHeroItems({ region, account, heroId })
+        .then(({ data }) => {
+          items.value = data
+        })
+        .catch()
+        .finally(() => {
+          isLoadingItems.value = false
+        })
+    }
+    fetchHeroData()
+    fetchHeroItemsData()
 
     return {
       isLoadingHero,

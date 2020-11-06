@@ -45,28 +45,30 @@
 </template>
 
 <script>
-import { computed, reactive } from 'vue'
+import { computed } from 'vue'
 import { useStore } from 'vuex'
-import setError from '@/mixins/setError'
+import useSetError from '@/composables/useSetError'
 
 export default {
   name: 'ErrorView',
-  mixins: [setError],
-  setup () {
+  setup (props, context) {
     const store = useStore()
 
-    const err = reactive({
-      loading: computed(() => store.state.error.value)
+    const err = computed(() => {
+      return store.state.error.error
     })
+    function prepareLeave () {
+      useSetError(props, context).setError(null)
+    }
 
     return {
-      err
+      err,
+      prepareLeave
     }
   },
-  // Este "guardia de ruta" es invocado justo antes de cambiar de página
-  // Es perfecto para limpiar el mensaje de error a través del mixin y liberar memoria
   beforeRouteLeave (to, from, next) {
-    setError.setApiErr(null)
+    // prepareLeave()
+    from.matched[0].instances.default.prepareLeave()
     next()
   }
 }

@@ -11,7 +11,7 @@
 import { ref, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
-import setError from '@/mixins/setError'
+import useSetError from '@/composables/useSetError'
 
 import { getApiAccount } from '@/api/search'
 
@@ -22,44 +22,43 @@ import ArtisansBlock from './ArtisansBlock/Index'
 
 export default {
   name: 'ProfileView',
-  mixins: [
-    setError
-  ],
   components: { BaseLoading, MainBlock, ArtisansBlock },
-  setup () {
+  setup (props, context) {
     const router = useRouter()
     const route = useRoute()
 
-    let isLoading = ref(true)
     const profileData = ref(null)
+    const isLoading = ref(true)
 
-    const { region, battleTag: account } = route.params
+    const fetchData = async () => {
+      const hash = route.hash
+      const { region, battleTag: account } = route.params
 
-    getApiAccount({ region, account })
-      .then(({ data }) => {
-        profileData.value = data
-      })
-      .catch((err) => {
-        profileData.value = null
+      getApiAccount(hash, { region, account })
+        .then(({ data }) => {
+          profileData.value = data
+        })
+        .catch((err) => {
+          profileData.value = null
 
-        const errObj = {
-          routeParams: route.params,
-          message: err.message
-        }
+          const errObj = {
+            routeParams: route.params,
+            message: err.message
+          }
 
-        if (err.response) {
-          errObj.data = err.response.data
-          errObj.status = err.response.status
-        }
+          if (err.response) {
+            errObj.data = err.response.data
+            errObj.status = err.response.status
+          }
 
-        setError.setApiErr(errObj)
+          useSetError(props, context).setError(errObj)
 
-        router.push({ name: 'Error' })
-      })
-      .finally(() => {
-        isLoading = false
-      })
-
+          router.push({ name: 'Error' })
+        })
+        .finally(() => {
+          isLoading.value = false
+        })
+    }
     const artisansData = computed(() => {
       return {
         blacksmith: profileData.value.blacksmith,
@@ -71,7 +70,13 @@ export default {
       }
     })
 
-    return { isLoading, profileData, artisansData }
+    fetchData()
+
+    return {
+      profileData,
+      artisansData,
+      isLoading
+    }
   }
 }
 </script>

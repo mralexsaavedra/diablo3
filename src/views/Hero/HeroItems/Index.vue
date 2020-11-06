@@ -135,7 +135,7 @@ export default {
     const itemsData = computed(() => {
       return {
         ...defaultItems,
-        ...this.items
+        ...props.items
       }
     })
 

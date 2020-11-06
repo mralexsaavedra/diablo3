@@ -48,11 +48,10 @@
 <script>
 import { computed } from 'vue'
 
-import heroName from '@/mixins/heroName'
+import useHeroName from '@/composables/useHeroName'
 
 export default {
   name: 'HeroDetailHeader',
-  mixins: [heroName],
   props: {
     detail: {
       type: Object,
@@ -66,7 +65,8 @@ export default {
     })
 
     return {
-      heroClass
+      heroClass,
+      ...useHeroName()
     }
   }
 }

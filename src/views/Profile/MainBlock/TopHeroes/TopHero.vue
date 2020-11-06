@@ -23,7 +23,8 @@
 import { computed } from 'vue'
 
 import { formatNumber } from '@/filters/numeral'
-import goToHero from '@/mixins/goToHero'
+
+import useGoToHero from '@/composables/useGoToHero'
 
 export default {
   name: 'TopHero',
@@ -33,16 +34,16 @@ export default {
       required: true
     }
   },
-  mixins: [goToHero],
-  filters: { formatNumber },
-  setup (props) {
+  setup (props, context) {
     const heroClass = computed(() => {
       const gender = props.hero.gender === 0 ? 'male' : 'female'
       return `hero-${props.hero.classSlug} ${gender}`
     })
 
     return {
-      heroClass
+      heroClass,
+      formatNumber,
+      ...useGoToHero(props, context)
     }
   }
 }

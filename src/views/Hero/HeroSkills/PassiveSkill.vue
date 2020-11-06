@@ -34,7 +34,7 @@ export default {
         64: 64
       }
       const host = `http://media.blizzard.com/d3/icons/skills/${sizes[42]}/`
-      return `${host}${this.skill.icon}.png`
+      return `${host}${props.skill.icon}.png`
     })
 
     return {

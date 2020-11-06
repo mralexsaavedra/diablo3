@@ -33,7 +33,6 @@ import HeroClassLevel from './HeroClassLevel'
 export default {
   name: 'HeroesList',
   components: { HeroIco, HeroClassLevel },
-  filters: { formatNumber },
   props: {
     heroes: {
       required: true,
@@ -58,7 +57,10 @@ export default {
       }
     ])
 
-    return { fields }
+    return {
+      fields,
+      formatNumber
+    }
   }
 }
 </script>

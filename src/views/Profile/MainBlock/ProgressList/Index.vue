@@ -31,10 +31,10 @@ export default {
      * @returns {Object} Ordered acts
     */
     const sortedActs = computed(() => {
-      return Object.keys(this.acts)
+      return Object.keys(props.acts)
         .sort()
         .reduce((a, c) => {
-          a[c] = this.acts[c]
+          a[c] = props.acts[c]
           return a
         }, {})
     })
