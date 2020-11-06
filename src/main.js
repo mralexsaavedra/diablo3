@@ -2,7 +2,7 @@ import Vue from 'vue'
 import CompApi from '@vue/composition-api'
 
 import '@/plugins/BootstrapVue'
-import '@/plugins/FontAwesome'
+import '@/plugins/fontAwesome'
 import '@/directives'
 
 import App from './App.vue'
