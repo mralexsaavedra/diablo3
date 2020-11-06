@@ -21,9 +21,6 @@ import { formatNumber } from '@/filters/numeral'
 
 export default {
   name: 'SingleStat',
-  filters: {
-    formatNumber
-  },
   props: {
     icoName: {
       required: true,
@@ -36,6 +33,11 @@ export default {
     info: {
       required: true,
       type: Object
+    }
+  },
+  setup () {
+    return {
+      formatNumber
     }
   }
 }

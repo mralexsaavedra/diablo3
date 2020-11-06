@@ -17,11 +17,15 @@ import { formatNumber } from '@/filters/numeral'
 
 export default {
   name: 'AttributeList',
-  filters: { formatNumber },
   props: {
     attributes: {
       type: Array,
       required: true
+    }
+  },
+  setup () {
+    return {
+      formatNumber
     }
   }
 }

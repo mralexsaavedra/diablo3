@@ -19,19 +19,21 @@
 </template>
 
 <script>
-import { computed } from 'vue'
+import { computed } from '@vue/composition-api'
 
-import TopHeroes from './TopHeroes/Index'
-import HeroesList from './HeroesList/Index'
-import ProgressList from './ProgressList/Index'
+import HeroesList from './HeroesList/Index.vue'
+import PlayerStats from './PlayerStats/Index.vue'
+import ProgressList from './ProgressList/Index.vue'
+import TopHeroes from './TopHeroes/Index.vue'
 
 export default {
   name: 'MainBlock',
-  components: { TopHeroes, HeroesList, ProgressList },
+  components: { TopHeroes, HeroesList, ProgressList, PlayerStats },
   props: {
     profileData: {
       type: Object,
-      required: true
+      required: true,
+      default: () => {}
     }
   },
   setup (props) {

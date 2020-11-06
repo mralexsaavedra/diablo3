@@ -1,10 +1,7 @@
-import { useStore } from 'vuex'
-import { get } from 'axios'
-import { locales } from '../utils/regions'
+import axios from 'axios'
+import store from '@/store'
+import { locales } from '@/utils/regions'
 
-const store = useStore()
-
-// https://{region}.api.blizzard.com, where {region} is one of us | eu | kr | tw
 const protocol = 'https://'
 const host = '.api.blizzard.com/'
 
@@ -15,63 +12,37 @@ const host = '.api.blizzard.com/'
  * @param account {String}
  * @returns {Promise}
  */
-function getApiAccount ({ region, account }) {
-  const resource = `d3/profile/${account}/`
-  const API_URL = `${protocol}${region}${host}${resource}`
-  const locale = locales[region]
+function getApiAccount (hash, { region, account }) {
+  const newHash = hash.replace('#', '-')
+  const resource = `d3/profile/${account}${newHash}`
 
-  const params = {
-    access_token: store.state.oauth.accessToken,
-    locale
-  }
+  const locale = locales[region.toLowerCase()]
+  const accessToken = store.state.oauth.accessToken
+  const API_URL = `${protocol}${region.toLowerCase()}${host}${resource}/?locale=${locale}&access_token=${accessToken}`
 
-  return get(API_URL, { params })
+  return axios.get(API_URL)
 }
 
-/**
- * Returns a single hero
- * GET – /d3/profile/{account}/hero/{heroId}
- * @param region {String}
- * @param account {String}
- * @param heroId {String}
- * @returns {Promise}
- */
 function getApiHero ({ region, account, heroId }) {
   const resource = `d3/profile/${account}/hero/${heroId}`
-  const API_URL = `${protocol}${region}${host}${resource}`
-  const locale = locales[region]
+  const locale = locales[region.toLowerCase()]
+  const accessToken = store.state.oauth.accessToken
+  const API_URL = `${protocol}${region.toLowerCase()}${host}${resource}/?locale=${locale}&access_token=${accessToken}`
 
-  const params = {
-    access_token: store.state.oauth.accessToken,
-    locale
-  }
-
-  return get(API_URL, { params })
+  return axios.get(API_URL)
 }
 
-/**
- * Returns a list of items for the specified hero.
- * GET – /d3/profile/{account}/hero/{heroId}/items
- * @param region {String}
- * @param account {String}
- * @param heroId {String}
- * @returns {Promise}
- */
 function getApiDetailedHeroItems ({ region, account, heroId }) {
   const resource = `d3/profile/${account}/hero/${heroId}/items`
-  const API_URL = `${protocol}${region}${host}${resource}`
-  const locale = locales[region]
+  const locale = locales[region.toLowerCase()]
+  const accessToken = store.state.oauth.accessToken
+  const API_URL = `${protocol}${region.toLowerCase()}${host}${resource}/?locale=${locale}&access_token=${accessToken}`
 
-  const params = {
-    access_token: store.state.oauth.accessToken,
-    locale
-  }
-
-  return get(API_URL, { params })
+  return axios.get(API_URL)
 }
 
 export {
-  getApiAccount,
   getApiHero,
-  getApiDetailedHeroItems
+  getApiDetailedHeroItems,
+  getApiAccount
 }

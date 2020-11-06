@@ -1,4 +1,7 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+
+Vue.use(VueRouter)
 
 const routerOptions = [
   { path: '/', name: 'Home' },
@@ -6,7 +9,7 @@ const routerOptions = [
   { path: '/region/:region/profile/:battleTag/hero/:heroId', name: 'Hero' },
   { path: '/about', name: 'About' },
   { path: '/error', name: 'Error' },
-  { path: '/:pathMatch(.*)*', name: 'Home' }
+  { path: '*', redirect: { name: 'Home' } }
 ]
 
 const routes = routerOptions.map(r => {
@@ -16,8 +19,7 @@ const routes = routerOptions.map(r => {
   }
 })
 
-const router = createRouter({
-  history: createWebHashHistory(),
+const router = new VueRouter({
   routes
 })
 

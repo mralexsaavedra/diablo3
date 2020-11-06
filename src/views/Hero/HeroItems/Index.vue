@@ -76,51 +76,8 @@
 </template>
 
 <script>
-import { computed } from 'vue'
+import { computed } from '@vue/composition-api'
 import ItemDetail from './ItemDetail'
-
-// Objeto con las keys de los 'items' del personaje
-const defaultItems = {
-  head: {
-    slotName: 'head'
-  },
-  shoulders: {
-    slotName: 'Shoulders'
-  },
-  torso: {
-    slotName: 'Torso'
-  },
-  neck: {
-    slotName: 'Neck'
-  },
-  hands: {
-    slotName: 'Hands'
-  },
-  waist: {
-    slotName: 'Waist'
-  },
-  bracers: {
-    slotName: 'Bracers'
-  },
-  leftFinger: {
-    slotName: 'Left Finger'
-  },
-  legs: {
-    slotName: 'Legs'
-  },
-  rightFinger: {
-    slotName: 'Right Finger'
-  },
-  mainHand: {
-    slotName: 'Main Hand'
-  },
-  feet: {
-    slotName: 'Feet'
-  },
-  offHand: {
-    slotName: 'Off Hand'
-  }
-}
 
 export default {
   name: 'HeroItems',
@@ -132,10 +89,53 @@ export default {
     }
   },
   setup (props) {
+    // Objeto con las keys de los 'items' del personaje
+    const defaultItems = {
+      head: {
+        slotName: 'head'
+      },
+      shoulders: {
+        slotName: 'Shoulders'
+      },
+      torso: {
+        slotName: 'Torso'
+      },
+      neck: {
+        slotName: 'Neck'
+      },
+      hands: {
+        slotName: 'Hands'
+      },
+      waist: {
+        slotName: 'Waist'
+      },
+      bracers: {
+        slotName: 'Bracers'
+      },
+      leftFinger: {
+        slotName: 'Left Finger'
+      },
+      legs: {
+        slotName: 'Legs'
+      },
+      rightFinger: {
+        slotName: 'Right Finger'
+      },
+      mainHand: {
+        slotName: 'Main Hand'
+      },
+      feet: {
+        slotName: 'Feet'
+      },
+      offHand: {
+        slotName: 'Off Hand'
+      }
+    }
+
     const itemsData = computed(() => {
       return {
         ...defaultItems,
-        ...this.items
+        ...props.items
       }
     })
 

@@ -12,14 +12,11 @@
 </template>
 
 <script>
-import { ref } from 'vue'
-
 export default {
   name: 'HeaderBar',
   setup () {
-    const title = ref(process.env.VUE_APP_TITLE)
     return {
-      title
+      title: process.env.VUE_APP_TITLE
     }
   }
 }

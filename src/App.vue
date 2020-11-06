@@ -1,30 +1,15 @@
 <template>
   <div id="app">
-    <LoadLayout v-if="state.loading">
+    <LoadLayout v-if="isLoading">
       <BaseLoading/>
     </LoadLayout>
 
     <MainLayout v-else/>
-<!--     <Suspense>
-      <template #default>
-        <MainLayout />
-      </template>
-
-      <template #fallback>
-        <LoadLayout>
-          <BaseLoading/>
-        </LoadLayout>
-      </template>
-    </Suspense> -->
   </div>
 </template>
 
 <script>
-import { computed, reactive } from 'vue'
-import { useStore } from 'vuex'
-
-import LoadLayout from './layouts/LoadLayout'
-import MainLayout from './layouts/MainLayout'
+import { MainLayout, LoadLayout } from '@/layouts/'
 import BaseLoading from '@/components/BaseLoading.vue'
 
 export default {
@@ -34,17 +19,9 @@ export default {
     LoadLayout,
     BaseLoading
   },
-  setup (props, { root }) {
-    const store = useStore()
-
-    store.dispatch('oauth/getToken', null, { root: true })
-
-    const state = reactive({
-      loading: computed(() => store.state.loading.value)
-    })
-
-    return {
-      state
+  computed: {
+    isLoading () {
+      return this.$store.state.loading.isLoading
     }
   }
 }

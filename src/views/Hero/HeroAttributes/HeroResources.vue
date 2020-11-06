@@ -45,16 +45,12 @@
 </template>
 
 <script>
-import { computed } from 'vue'
-import resources from '@/mixins/resources'
+import { computed } from '@vue/composition-api'
 import { formatNumber } from '@/filters/numeral'
+import useResources from '@/composables/useResources'
 
 export default {
   name: 'HeroResources',
-  mixins: [resources],
-  filters: {
-    formatNumber
-  },
   props: {
     resources: {
       required: true,
@@ -62,11 +58,18 @@ export default {
     }
   },
   setup (props) {
-    const classResourceName = computed(() => `resource-${resources.resourceClassName(props.resources.classSlug)}`)
-    const displayResourceName = computed(() => resources.resourceDisplayName(props.resources.classSlug))
-    const hasSecondaryResource = computed(() => props.resources.classSlug === 'demon-hunter')
+    const classResourceName = computed(() => {
+      return `resource-${useResources().resourceClassName(props.resources.classSlug)}`
+    })
+    const displayResourceName = computed(() => {
+      return useResources().resourceDisplayName(props.resources.classSlug)
+    })
+    const hasSecondaryResource = computed(() => {
+      return props.resources.classSlug === 'demon-hunter'
+    })
 
     return {
+      formatNumber,
       classResourceName,
       displayResourceName,
       hasSecondaryResource

@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import ActiveSkill from './ActiveSkill'
+import ActiveSkill from './ActiveSkill.vue'
 
 export default {
   name: 'ActiveSkills',

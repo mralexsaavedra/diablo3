@@ -42,8 +42,8 @@
 </template>
 
 <script>
-import { computed } from 'vue'
-import ItemDetailGem from './ItemDetailGem'
+import { computed } from '@vue/composition-api'
+import ItemDetailGem from './ItemDetailGem.vue'
 
 export default {
   name: 'ItemDetail',

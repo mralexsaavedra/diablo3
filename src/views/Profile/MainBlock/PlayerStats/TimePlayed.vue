@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import TimePlayedHero from './TimePlayedHero'
+import TimePlayedHero from './TimePlayedHero.vue'
 
 export default {
   name: 'TimePlayed',

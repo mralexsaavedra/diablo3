@@ -1,64 +1,61 @@
 <template>
-  <BaseLoading v-if="isLoading"/>
-  <h1>Profile View</h1>
-  <template v-if="profileData !== null">
-    <MainBlock :profile-data="profileData"/>
-    <ArtisansBlock :artisans-data="artisansData" />
-  </template>
+  <div>
+    <BaseLoading v-if="isLoading"/>
+    <h1>Profile View</h1>
+    <template v-if="profileData !== null">
+      <MainBlock :profile-data="profileData"/>
+      <ArtisansBlock :artisans-data="artisansData" />
+    </template>
+  </div>
 </template>
 
 <script>
-import { ref, computed } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { ref, computed } from '@vue/composition-api'
 
-import setError from '@/mixins/setError'
+import ArtisansBlock from './ArtisansBlock/Index'
+import BaseLoading from '@/components/BaseLoading'
+import MainBlock from './MainBlock/Index'
+
+import useSetError from '@/composables/useSetError'
 
 import { getApiAccount } from '@/api/search'
 
-import BaseLoading from '@/components/BaseLoading'
-
-import MainBlock from './MainBlock/Index'
-import ArtisansBlock from './ArtisansBlock/Index'
-
 export default {
   name: 'ProfileView',
-  mixins: [
-    setError
-  ],
   components: { BaseLoading, MainBlock, ArtisansBlock },
-  setup () {
-    const router = useRouter()
-    const route = useRoute()
-
-    let isLoading = ref(true)
+  setup (props, context) {
     const profileData = ref(null)
+    const isLoading = ref(true)
 
-    const { region, battleTag: account } = route.params
+    const fetchData = async () => {
+      const hash = context.root.$route.hash
+      const { region, battleTag: account } = context.root.$route.params
 
-    getApiAccount({ region, account })
-      .then(({ data }) => {
-        profileData.value = data
-      })
-      .catch((err) => {
-        profileData.value = null
+      getApiAccount(hash, { region, account })
+        .then(({ data }) => {
+          profileData.value = data
+        })
+        .catch((err) => {
+          profileData.value = null
 
-        const errObj = {
-          routeParams: route.params,
-          message: err.message
-        }
+          const errObj = {
+            routeParams: context.root.$route.params,
+            message: err.message
+          }
 
-        if (err.response) {
-          errObj.data = err.response.data
-          errObj.status = err.response.status
-        }
+          if (err.response) {
+            errObj.data = err.response.data
+            errObj.status = err.response.status
+          }
 
-        setError.setApiErr(errObj)
+          useSetError(props, context).setError(errObj)
 
-        router.push({ name: 'Error' })
-      })
-      .finally(() => {
-        isLoading = false
-      })
+          context.root.$router.push({ name: 'Error' })
+        })
+        .finally(() => {
+          isLoading.value = false
+        })
+    }
 
     const artisansData = computed(() => {
       return {
@@ -71,7 +68,13 @@ export default {
       }
     })
 
-    return { isLoading, profileData, artisansData }
+    fetchData()
+
+    return {
+      isLoading,
+      profileData,
+      artisansData
+    }
   }
 }
 </script>

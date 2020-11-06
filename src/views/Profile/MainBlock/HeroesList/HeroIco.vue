@@ -9,27 +9,29 @@
 </template>
 
 <script>
-import { computed } from 'vue'
+import { computed } from '@vue/composition-api'
 
-import goToHero from '@/mixins/goToHero'
+import useGoToHero from '@/composables/useGoToHero'
 
 export default {
   name: 'HeroIco',
-  mixins: [goToHero],
   props: {
     hero: {
       required: true,
       type: Object
     }
   },
-  setup () {
+  setup (props, context) {
     const heroClassImg = computed(() => {
-      const gender = this.hero.gender === 1 ? 'female' : 'male'
-      const hardcore = this.hero.hardcore ? 'border-danger' : ''
-      return `hero-${this.hero.classSlug} ${gender} ${hardcore}`
+      const gender = props.hero.gender === 1 ? 'female' : 'male'
+      const hardcore = props.hero.hardcore ? 'border-danger' : ''
+      return `hero-${props.hero.classSlug} ${gender} ${hardcore}`
     })
 
-    return { heroClassImg }
+    return {
+      heroClassImg,
+      ...useGoToHero(props, context)
+    }
   }
 }
 </script>

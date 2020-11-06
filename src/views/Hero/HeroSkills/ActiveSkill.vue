@@ -22,7 +22,8 @@
 </template>
 
 <script>
-import { computed } from 'vue'
+import { computed } from '@vue/composition-api'
+
 export default {
   name: 'ActiveSkill',
   props: {
@@ -47,9 +48,9 @@ export default {
       const host = `http://media.blizzard.com/d3/icons/skills/${sizes[1]}/`
       // Ejemplo:
       // http://media.blizzard.com/d3/icons/skills/42/p6_necro_bonespikes.png
-      return `${host}${this.skill.icon}.png`
+      return `${host}${props.skill.icon}.png`
     })
-    const slotClass = computed(() => `slot-${this.slotNum}`)
+    const slotClass = computed(() => `slot-${props.slotNum}`)
 
     return {
       skillUrl,

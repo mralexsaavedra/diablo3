@@ -48,15 +48,12 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, computed } from '@vue/composition-api'
 import { regions } from '@/utils/regions'
 
 export default {
   name: 'MainForm',
-  setup () {
-    const router = useRouter()
-
+  setup (props, context) {
     const form = ref({
       battleTag: '',
       region: 'eu'
@@ -66,8 +63,8 @@ export default {
 
     const onSubmit = () => {
       const { region, battleTag } = form.value
-      // TODO
-      router.push({ name: 'Profile', params: { region, battleTag: battleTag.replace('#', '-') } })
+      const route = `/region/${region}/profile/${battleTag}`
+      context.root.$router.push(route)
     }
 
     return { form, regiones, onSubmit }

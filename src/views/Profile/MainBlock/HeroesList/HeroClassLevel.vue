@@ -1,21 +1,25 @@
 <template>
   <div class="hero-name-level">
-    <span> {{ heroName.classToName(hero.classSlug) }} </span>
-    <span>·</span>
+    <span> {{ classToName(hero.class) }}</span>
+    <span></span>
     <span class="text-monospace font-weight-bold"> {{ hero.level }} </span>
   </div>
-</template>
+</template>>
 
 <script>
-import heroName from '@/mixins/heroName.js'
+import useHeroName from '@/composables/useHeroName.js'
 
 export default {
   name: 'HeroNameLevel',
-  mixins: [heroName],
   props: {
     hero: {
       required: true,
       type: Object
+    }
+  },
+  setup () {
+    return {
+      ...useHeroName()
     }
   }
 }

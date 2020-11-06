@@ -11,9 +11,9 @@
 </template>
 
 <script>
-import { computed } from 'vue'
+import { computed } from '@vue/composition-api'
 
-import ArtisanItem from './ArtisanItem'
+import ArtisanItem from './ArtisanItem.vue'
 
 export default {
   name: 'ArtisansBlock',

@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref } from '@vue/composition-api'
 import MadeByFoot from './MadeByFoot'
 import PoweredByFoot from './PoweredByFoot'
 import FootLinks from './FootLinks'

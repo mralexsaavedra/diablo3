@@ -16,7 +16,8 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue'
+import { ref, computed } from '@vue/composition-api'
+
 export default {
   name: 'HeroSkills',
   components: {
