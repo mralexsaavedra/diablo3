@@ -40,7 +40,7 @@ export default {
     HeroSkills,
     HeroItems
   },
-  setup (props, context) {
+  setup (props, { root }) {
     const isLoadingHero = ref(false)
     const isLoadingItems = ref(false)
     const hero = ref(null)
@@ -78,7 +78,7 @@ export default {
     })
 
     function fetchHeroData () {
-      const { region, battleTag: account, heroId } = context.root.$route.params
+      const { region, battleTag: account, heroId } = root.$route.params
       isLoadingHero.value = true
       getApiHero({ region, account, heroId })
         .then(({ data }) => {
@@ -91,7 +91,7 @@ export default {
     }
 
     function fetchHeroItemsData () {
-      const { region, battleTag: account, heroId } = context.root.$route.params
+      const { region, battleTag: account, heroId } = root.$route.params
       isLoadingItems.value = true
       getApiDetailedHeroItems({ region, account, heroId })
         .then(({ data }) => {

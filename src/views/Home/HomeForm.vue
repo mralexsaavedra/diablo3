@@ -53,7 +53,7 @@ import { regions } from '@/utils/regions'
 
 export default {
   name: 'MainForm',
-  setup (props, context) {
+  setup (props, { root }) {
     const form = ref({
       battleTag: '',
       region: 'eu'
@@ -64,7 +64,7 @@ export default {
     const onSubmit = () => {
       const { region, battleTag } = form.value
       const route = `/region/${region}/profile/${battleTag}`
-      context.root.$router.push(route)
+      root.$router.push(route)
     }
 
     return { form, regiones, onSubmit }
